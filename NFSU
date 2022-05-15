@@ -1,0 +1,165 @@
+-- ----------------------------------------------------------------------------
+-- MySQL Workbench Migration
+-- Migrated Schemata: nfsu
+-- Source Schemata: nfsu
+-- Created: Tue May 10 12:13:03 2022
+-- Workbench Version: 8.0.28
+-- ----------------------------------------------------------------------------
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------------------------------------------------------
+-- Schema nfsu
+-- ----------------------------------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `nfsu` ;
+
+-- ----------------------------------------------------------------------------
+-- Table nfsu.areaofstudy
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `nfsu`.`areaofstudy` (
+  `AOS_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `AOStudy` VARCHAR(1000) NOT NULL,
+  `AOSDetails` VARCHAR(1000) NOT NULL,
+  `AOStatus` INT(11) NOT NULL,
+  `AOSDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  PRIMARY KEY (`AOS_ID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8mb4;
+
+-- ----------------------------------------------------------------------------
+-- Table nfsu.audittrail
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `nfsu`.`audittrail` (
+  `Trail_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `SysUser_ID` INT(11) NOT NULL,
+  `Tablename` VARCHAR(1000) NOT NULL,
+  `SysDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  `SysHostIP` VARCHAR(1000) NOT NULL,
+  `SysHostName` VARCHAR(1000) NOT NULL,
+  `SysAction` VARCHAR(1000) NOT NULL,
+  PRIMARY KEY (`Trail_ID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 104
+DEFAULT CHARACTER SET = utf8mb4;
+
+-- ----------------------------------------------------------------------------
+-- Table nfsu.certificates
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `nfsu`.`certificates` (
+  `Cert_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `student_id` INT(11) NOT NULL,
+  `filename` VARCHAR(1000) NOT NULL,
+  `fullpath` VARCHAR(1000) NOT NULL,
+  `filesize` VARCHAR(1000) NOT NULL,
+  `downloads` VARCHAR(1000) NOT NULL,
+  PRIMARY KEY (`Cert_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 56
+DEFAULT CHARACTER SET = utf8mb4;
+
+-- ----------------------------------------------------------------------------
+-- Table nfsu.faculties
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `nfsu`.`faculties` (
+  `FacultyID` INT(11) NOT NULL AUTO_INCREMENT,
+  `AreaOfStudyID` INT(11) NOT NULL,
+  `FacultyName` VARCHAR(1000) NOT NULL,
+  `FStatus` INT(11) NOT NULL,
+  `FacultyDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  PRIMARY KEY (`FacultyID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb4;
+
+-- ----------------------------------------------------------------------------
+-- Table nfsu.migrations
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `nfsu`.`migrations` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `migration` VARCHAR(255) NOT NULL,
+  `batch` INT(11) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------------------
+-- Table nfsu.programmes
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `nfsu`.`programmes` (
+  `ProgID` INT(11) NOT NULL AUTO_INCREMENT,
+  `ProgFacultyID` INT(11) NOT NULL,
+  `ProgrammeName` VARCHAR(1000) NOT NULL,
+  `ProgStatus` INT(11) NOT NULL,
+  `ProDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  PRIMARY KEY (`ProgID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb4;
+
+-- ----------------------------------------------------------------------------
+-- Table nfsu.staffusers
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `nfsu`.`staffusers` (
+  `Suser_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `SName` VARCHAR(1000) NOT NULL,
+  `Surname` VARCHAR(1000) NOT NULL,
+  `SDesignation` VARCHAR(1000) NOT NULL,
+  `Susername` VARCHAR(1000) NOT NULL,
+  `Spassword` VARCHAR(1000) NOT NULL,
+  `Saccess_id` INT(11) NOT NULL,
+  `Status` INT(11) NOT NULL,
+  `Sdate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  PRIMARY KEY (`Suser_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb4;
+
+-- ----------------------------------------------------------------------------
+-- Table nfsu.students
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `nfsu`.`students` (
+  `student_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `user_id` VARCHAR(1000) NOT NULL,
+  `Fname` VARCHAR(1000) NOT NULL,
+  `Mname` VARCHAR(1000) NOT NULL,
+  `Surname` VARCHAR(1000) NOT NULL,
+  `Email` VARCHAR(1000) NOT NULL,
+  `DOB` VARCHAR(1000) NOT NULL,
+  `address` VARCHAR(1000) NOT NULL,
+  `Cdate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  PRIMARY KEY (`student_id`),
+  INDEX `user_id` (`user_id`(255) ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 14
+DEFAULT CHARACTER SET = utf8mb4;
+
+-- ----------------------------------------------------------------------------
+-- Table nfsu.suserlevel
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `nfsu`.`suserlevel` (
+  `Saccess_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `Level_name` VARCHAR(1000) NOT NULL,
+  `Description` VARCHAR(1000) NOT NULL,
+  `Status` INT(1) NOT NULL,
+  `Ldate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  PRIMARY KEY (`Saccess_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 12
+DEFAULT CHARACTER SET = utf8mb4;
+
+-- ----------------------------------------------------------------------------
+-- Table nfsu.users
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `nfsu`.`users` (
+  `user_id` MEDIUMINT(9) NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(100) NOT NULL,
+  `password` VARCHAR(100) NOT NULL,
+  `hostname` VARCHAR(100) NOT NULL,
+  `dates` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  PRIMARY KEY (`user_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 59
+DEFAULT CHARACTER SET = utf8mb4;
+SET FOREIGN_KEY_CHECKS = 1;

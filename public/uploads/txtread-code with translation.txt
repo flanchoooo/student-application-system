@@ -1,0 +1,58 @@
+# Import required packages
+from email.mime import image
+import cv2
+import pytesseract
+from googletrans import Translator
+from encodings import utf_8
+from PIL import Image 
+
+# Mention the installed location of Tesseract-OCR in your system
+pytesseract.pytesseract.tesseract_cmd = '/Program Files/Tesseract-OCR/tesseract.exe'
+
+file_name = "my.jpg"
+
+#file_name = 'arabic.jpg'
+
+def read_file(file_name): 
+    
+    # Read image from which text needs to be extracted
+    img = cv2.imread(file_name)
+    img = cv2.resize(img, (1000, 850))
+    # Preprocessing the image starts
+    #text = print(pytesseract.image_to_string(img))
+
+    file = open("recognized.txt", "w+")
+    file.write("")
+    file.close()
+
+    file = open("recognized.txt", "a")
+	
+	# Apply OCR on the cropped image
+    text = pytesseract.image_to_string(img)
+
+
+    p = Translator() 
+    p_translated = p.translate(text, dest='english') 
+    translated = str(p_translated.text)
+
+    if translated != text:
+
+        print(text);	
+	    # Appending the text into file
+        file.write(translated)
+        file.write("\n")
+	
+	# Close the file
+        file.close
+   
+    if translated == text:
+
+        # print(text);	
+	    # Appending the text into file
+        file.write(text)
+        file.write("\n")
+	
+	    # Close the file
+        file.close
+    
+   
